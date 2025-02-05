@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            height: 100vh;
+            background-color: rgb(220, 220, 220);
+            place-items: center;
+            display: grid;
+            
+        }
+        button{
+            display: flex;
+            justify-content: center;  
+            align-items: center;      
+            width: 300px;
+            text-align: center;
+            height: 100px;
+            font-size: 90px;
+            background-color: red;
+            color: white;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <button id="myButton">Мусор</button>
+
+<script>
+    const button = document.getElementById("myButton");
+
+    button.addEventListener("click", () => {
+        const today = new Date();
+
+        const day = today.getDate()-1;        // День месяца 
+        const month = today.getMonth() + 1; // Месяц 
+        // const year = today.getFullYear();   // Полный год
+        // console.log(`Сегодня: ${day}.${month}.${year}`);
+        // console.log("Кнопка нажата!");
+        const list_day_zmiszane   = [7,21,7,21,4,18,2,16,30,13,27,11,25,8,22,5,19,3,17,31,14,28,12,27,9,23]
+        const list_day_segregacja   = [26,26,23,21,18,16,13,10,8,5,3,31,28]
+        const list_day_bioodpady   = [6,20,6,20,3,177,26,15,29,12,26,10,24,7,21,4,18,2,16,30,13,27,11,20,8,22]
+        const list_day_gabaryty   = [3,16]
+
+        const list_month_zmiszane   = [1,1,2,2,3,3,4,4,4,5,5,6,6,7,7,8,8,9,9,9,10,10,11,11,12,12]
+        const list_month_segregacja   = [1,2,3,4,5,6,7,8,9,10,11,11,12]
+        const list_month_bioodpady   = [1,1,2,2,3,3,3,4,4,5,5,6,6,7,7,8,8,9,9,9,10,10,11,11,12,12]
+        const list_month_gabaryty   = [3,9]
+
+        let the_end = []
+        let prowerka = 0
+
+        
+    for (let i = 0; i < list_day_zmiszane.length; i++) {
+        if (list_day_zmiszane[i] === day){
+            if (list_month_zmiszane[i] === month){
+            the_end.push("Сегодня есть вывоз мусора 'zmiszane' надо бежать  ")
+            prowerka += 1
+                }
+            }};
+    
+            for (let i = 0; i < list_day_segregacja.length; i++) {
+        if (list_day_segregacja[i] === day){
+            if (list_month_segregacja[i] === month){
+                the_end.push("Сегодня есть вывоз мусора 'segregacja' надо бежать  ")
+                prowerka += 1
+                }};
+            }
+
+            for (let i = 0; i < list_day_bioodpady.length; i++) {
+        if (list_day_bioodpady[i] === day){
+            if (list_month_bioodpady[i] === month){
+                the_end.push("Сегодня есть вывоз мусора 'bioodpady' надо бежать  ")
+                prowerka += 1
+                }};
+            }
+
+            for (let i = 0; i < list_day_gabaryty.length; i++) {
+        if (list_day_gabaryty[i] === day){
+            if (list_month_gabaryty[i] === month){
+                the_end.push("Сегодня есть вывоз мусора 'gabaryty' надо бежать  ")
+                prowerka += 1
+                }};
+            }
+
+    if (prowerka > 0){
+        alert(the_end)
+        prowerka = 0
+    }else{alert("Сегодня нету вывоза мусора можно отдыхать.")}
+
+});
+</script>
+
+</body>
+</html>
