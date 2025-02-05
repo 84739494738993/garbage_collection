@@ -35,7 +35,7 @@
     button.addEventListener("click", () => {
         const today = new Date();
 
-        const day = today.getDate()-1;        // День месяца 
+        const day = today.getDate() + 1;        // День месяца 
         const month = today.getMonth() + 1; // Месяц 
         // const year = today.getFullYear();   // Полный год
         // console.log(`Сегодня: ${day}.${month}.${year}`);
@@ -57,7 +57,7 @@
     for (let i = 0; i < list_day_zmiszane.length; i++) {
         if (list_day_zmiszane[i] === day){
             if (list_month_zmiszane[i] === month){
-            the_end.push("Сегодня есть вывоз мусора 'zmiszane' надо бежать  ")
+            the_end.push("Завтра вывоз мусора 'zmiszane' надо приготовится.")
             prowerka += 1
                 }
             }};
@@ -65,7 +65,7 @@
             for (let i = 0; i < list_day_segregacja.length; i++) {
         if (list_day_segregacja[i] === day){
             if (list_month_segregacja[i] === month){
-                the_end.push("Сегодня есть вывоз мусора 'segregacja' надо бежать  ")
+                the_end.push("Завтра вывоз мусора 'segregacja' надо приготовится.")
                 prowerka += 1
                 }};
             }
@@ -73,7 +73,7 @@
             for (let i = 0; i < list_day_bioodpady.length; i++) {
         if (list_day_bioodpady[i] === day){
             if (list_month_bioodpady[i] === month){
-                the_end.push("Сегодня есть вывоз мусора 'bioodpady' надо бежать  ")
+                the_end.push("Завтра вывоз мусора 'bioodpady' надо приготовится.")
                 prowerka += 1
                 }};
             }
@@ -81,7 +81,7 @@
             for (let i = 0; i < list_day_gabaryty.length; i++) {
         if (list_day_gabaryty[i] === day){
             if (list_month_gabaryty[i] === month){
-                the_end.push("Сегодня есть вывоз мусора 'gabaryty' надо бежать  ")
+                the_end.push("Завтра вывоз мусора 'gabaryty' надо приготовится.")
                 prowerka += 1
                 }};
             }
@@ -89,7 +89,7 @@
     if (prowerka > 0){
         alert(the_end)
         prowerka = 0
-    }else{alert("Сегодня нет вывоза мусора можно отдыхать.")}
+    }else{alert("Завтра нету вывоза мусора можно отдыхать.")}
 
 });
 </script>
