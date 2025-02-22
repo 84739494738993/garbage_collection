@@ -1,48 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Календарь</title>
     <style>
-        body{
+        body {
             height: 100vh;
-            background-color: rgb(220, 220, 220);
-            place-items: center;
-            display: grid;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        table {
+            width: 90%;
+            height: 90%;
+            border-collapse: collapse;
+            text-align: center;
             
         }
-        button{
-            display: flex;
-            justify-content: center;  
-            align-items: center;      
-            width: 300px;
-            text-align: center;
-            height: 100px;
-            font-size: 90px;
-            background-color: red;
-            color: white;
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            font-size: 60px;
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
         }
+        th {
+            background-color: #f4f4f4;
+            
+        }
+        .calendar-container {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        @media(max-width:900px){
+            th, td {
+            border: 1px solid black;
+            padding: 5px;
+            font-size: 20px;
+            width: 200px;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
+    }
+}
     </style>
 </head>
 <body>
-    <button id="myButton">Мусор</button>
+    <div class="calendar-container">
+        <table id="myTable">
 
-<script>
-    const button = document.getElementById("myButton");
+        </table>
+    </div>
 
-    button.addEventListener("click", () => {
-        const today = new Date();
+    <script>
 
-        const day = today.getDate() + 1;        // День месяца 
-        const month = today.getMonth() + 1; // Месяц 
-        // const year = today.getFullYear();   // Полный год
-        // console.log(`Сегодня: ${day}.${month}.${year}`);
-        // console.log("Кнопка нажата!");
-        const list_day_zmiszane   = [7,21,7,21,4,18,2,16,30,13,27,11,25,8,22,5,19,3,17,31,14,28,12,27,9,23]
+const list_day_zmiszane   = [7,21,7,21,4,18,2,16,30,13,27,11,25,8,22,5,19,3,17,31,14,28,12,27,9,23]
         const list_day_segregacja   = [26,26,23,21,18,16,13,10,8,5,3,31,28]
-        const list_day_bioodpady   = [6,20,6,20,3,177,26,15,29,12,26,10,24,7,21,4,18,2,16,30,13,27,11,20,8,22]
+        const list_day_bioodpady   = [6,20,6,20,3,17,26,15,29,12,26,10,24,7,21,4,18,2,16,30,13,27,11,20,8,22]
         const list_day_gabaryty   = [3,16]
 
         const list_month_zmiszane   = [1,1,2,2,3,3,4,4,4,5,5,6,6,7,7,8,8,9,9,9,10,10,11,11,12,12]
@@ -53,46 +71,74 @@
         let the_end = []
         let prowerka = 0
 
-        
-    for (let i = 0; i < list_day_zmiszane.length; i++) {
-        if (list_day_zmiszane[i] === day){
-            if (list_month_zmiszane[i] === month){
-            the_end.push("Завтра вывоз мусора 'zmiszane' надо приготовиться.")
-            prowerka += 1
+        const table = document.getElementById("myTable");
+let day = 1;
+let month_day = [31,28,31,30,31,30,31,31,30,31,30,31];
+const today = new Date();
+const month = today.getMonth();
+const year = today.getFullYear();
+
+// Проверка на високосный год (для февраля)
+if ((year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0)) {
+    month_day[1] = 29; // Февраль в високосном году
+}
+
+for (let i = 0; i < 5; i++) {
+    const row = table.insertRow();
+
+    for (let j = 0; j < 7; j++) {
+        if (day > month_day[month]) break; // Если день выходит за пределы месяца, выходим из цикла
+
+        const cell = row.insertCell();
+        cell.textContent = day;
+
+        // Проверка условий для покраски ячеек
+        for (let i = 0; i < list_day_zmiszane.length; i++) {
+            if (list_day_zmiszane[i] === day) {
+                if (list_month_zmiszane[i] === month + 1) {
+                    cell.style.backgroundColor = "green";
                 }
-            }};
-    
-            for (let i = 0; i < list_day_segregacja.length; i++) {
-        if (list_day_segregacja[i] === day){
-            if (list_month_segregacja[i] === month){
-                the_end.push("Завтра вывоз мусора 'segregacja' надо приготовиться.")
-                prowerka += 1
-                }};
             }
+        }
 
-            for (let i = 0; i < list_day_bioodpady.length; i++) {
-        if (list_day_bioodpady[i] === day){
-            if (list_month_bioodpady[i] === month){
-                the_end.push("Завтра вывоз мусора 'bioodpady' надо приготовиться.")
-                prowerka += 1
-                }};
+        for (let i = 0; i < list_day_segregacja.length; i++) {
+            if (list_day_segregacja[i] === day) {
+                if (list_month_segregacja[i] === month + 1) {
+                    cell.style.backgroundColor = "yellow";
+                }
             }
+        }
 
-            for (let i = 0; i < list_day_gabaryty.length; i++) {
-        if (list_day_gabaryty[i] === day){
-            if (list_month_gabaryty[i] === month){
-                the_end.push("Завтра вывоз мусора 'gabaryty' надо приготовиться.")
-                prowerka += 1
-                }};
+        for (let i = 0; i < list_day_bioodpady.length; i++) {
+            if (list_day_bioodpady[i] === day) {
+                if (list_month_bioodpady[i] === month + 1) {
+                    cell.style.backgroundColor = "brown";
+                }
             }
+        }
 
-    if (prowerka > 0){
-        alert(the_end)
-        prowerka = 0
-    }else{alert("Завтра нету вывоза мусора можно отдыхать.")}
+        for (let i = 0; i < list_day_gabaryty.length; i++) {
+            if (list_day_gabaryty[i] === day) {
+                if (list_month_gabaryty[i] === month + 1) {
+                    cell.style.backgroundColor = "orange";
+                }
+            }
+        }
 
-});
-</script>
+        // Применение линейного градиента для определённых дней
+        if (day === 3 && month + 1 === 4) {
+            cell.style.background = "linear-gradient(orange 50%, green 50%)";
+        }
 
+        if (day === 16 && month + 1 === 10) {
+            cell.style.background = "linear-gradient(orange 50%, green 50%)";
+        }
+
+        day += 1; 
+    }
+}
+
+
+    </script>
 </body>
 </html>
