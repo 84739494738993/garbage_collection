@@ -76,6 +76,18 @@ const today = new Date();
 const month = today.getMonth();
 const year = today.getFullYear();
 
+function day_today() {
+    const today = new Date();
+    const day = today.getDate();
+    const cells = document.querySelectorAll("#myTable td");
+    cells.forEach(cell => {
+        if (parseInt(cell.textContent) === day) {
+            cell.style.border = "5px solid red";
+        }
+    });
+}
+
+
 // Проверка на високосный год (для февраля)
 if ((year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0)) {
     month_day[1] = 29; // Февраль в високосном году
@@ -136,7 +148,7 @@ for (let i = 0; i < 5; i++) {
     }
 }
 
-
+day_today();
     </script>
 </body>
 </html>
