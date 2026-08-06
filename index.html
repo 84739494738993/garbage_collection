@@ -1,153 +1,208 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Календарь</title>
-    <style>
-        body {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-        table {
-            width: 90%;
-            height: 90%;
-            border-collapse: collapse;
-            text-align: center;
-            
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 10px;
-            font-size: 60px;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-        }
-        th {
-            background-color: #f4f4f4;
-            
-        }
-        .calendar-container {
-            height: 100vh;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-        @media(max-width:900px){
-            th, td {
-            border: 1px solid black;
-            padding: 5px;
-            font-size: 20px;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Календарь вывоза отходов</title>
+<style>
+    * { box-sizing: border-box; }
+    body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background: linear-gradient(135deg, #1f2937, #111827);
+        font-family: 'Segoe UI', Arial, sans-serif;
     }
-}
-    </style>
+    .calendar-container {
+        width: 95%;
+        max-width: 1000px;
+        padding: 24px;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    }
+    h1 {
+        margin: 0 0 16px;
+        color: #111827;
+        font-size: 28px;
+        letter-spacing: 1px;
+    }
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 6px;
+        text-align: center;
+    }
+    th, td {
+        border-radius: 10px;
+        padding: 14px 0;
+        font-size: 26px;
+        font-weight: 700;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        color: #1f2937;
+        transition: transform 0.15s ease;
+    }
+    th {
+        background-color: #e5e7eb;
+        font-size: 16px;
+        color: #374151;
+        padding: 8px 0;
+    }
+    td {
+        background-color: #f9fafb;
+        border: 1px solid #e5e7eb;
+    }
+    td:hover {
+        transform: scale(1.05);
+    }
+    .today {
+        outline: 3px solid #ef4444;
+        outline-offset: -3px;
+    }
+    .legend {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+        margin-top: 18px;
+        font-size: 14px;
+        color: #374151;
+    }
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .swatch {
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+        display: inline-block;
+        border: 1px solid rgba(0,0,0,0.2);
+    }
+    @media (max-width: 900px) {
+        th, td {
+            padding: 6px 0;
+            font-size: 15px;
+            border-radius: 6px;
+        }
+        table { border-spacing: 3px; }
+        h1 { font-size: 20px; }
+    }
+</style>
 </head>
 <body>
-    <div class="calendar-container">
-        <table id="myTable">
-
-        </table>
+<div class="calendar-container">
+    <h1 id="calTitle">Календарь</h1>
+    <table id="myTable"></table>
+    <div class="legend">
+        <div class="legend-item"><span class="swatch" style="background:rgb(0,200,0)"></span>Смешанные</div>
+        <div class="legend-item"><span class="swatch" style="background:yellow"></span>Сортировка</div>
+        <div class="legend-item"><span class="swatch" style="background:#8B4513"></span>Биоотходы</div>
+        <div class="legend-item"><span class="swatch" style="background:orange"></span>Крупногабаритные</div>
     </div>
+</div>
 
-    <script>
+<script>
+const list_day_zmieszane  = [3,17,25,15,29,12,26,10,24,7,21,4,18,2,16,30,13,27,11,29,8,22];
+const list_month_zmieszane = [4,4,4,5,5,6,6,7,7,8,8,9,9,10,10,10,11,11,12,12,1,1];
 
+const list_day_segregacja  = [22,20,17,15,12,9,7,4,2,30,27];
+const list_month_segregacja = [4,5,6,7,8,9,10,11,12,12,1];
 
-    const list_day_zmieszane   = [3,17,25,15,29,12,26,10,24,7,21,4,18,2,16,30,13,27,11,29,8,22]
-    const list_day_segregacja   = [22,20,17,15,12,9,7,4,2,30,27]
-    const list_day_bioodpady   = [2,16,30,14,28,11,25,9,23,6,20,3,17,1,15,29,12,26,10,19,7,21]
-    const list_day_gabaryty   = [20,18]
-    const list_month_zmieszane   = [4,4,4,5,5,6,6,7,7,8,8,9,9,10,10,10,11,11,12,12,1,1]
-    const list_month_segregacja   = [4,5,6,7,8,9,10,11,12,12,1]
-    const list_month_bioodpady   = [4,4,4,5,5,6,6,7,7,8,8,9,9,10,10,10,11,11,12,12,1,1]
-    const list_month_gabaryty   = [4,8]
-        let the_end = []
-        let prowerka = 0
+const list_day_bioodpady  = [2,16,30,14,28,11,25,9,23,6,20,3,17,1,15,29,12,26,10,19,7,21];
+const list_month_bioodpady = [4,4,4,5,5,6,6,7,7,8,8,9,9,10,10,10,11,11,12,12,1,1];
 
-        const table = document.getElementById("myTable");
-let day = 1;
-let month_day = [31,28,31,30,31,30,31,31,30,31,30,31];
+const list_day_gabaryty  = [20,18];
+const list_month_gabaryty = [4,8];
+
+const dayNames = ["Пн","Вт","Ср","Чт","Пт","Сб","Вс"];
+
+const table = document.getElementById("myTable");
 const today = new Date();
-const month = today.getMonth();
+const month = today.getMonth(); // 0-indexed
+const humanMonth = month + 1;   // 1-indexed, matches the data lists
 const year = today.getFullYear();
 
-function day_today() {
-    const today = new Date();
-    const day = today.getDate();
-    const cells = document.querySelectorAll("#myTable td");
-    cells.forEach(cell => {
-        if (parseInt(cell.textContent) === day) {
-            cell.style.border = "5px solid red";
-        }
-    });
-}
+const monthNames = ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"];
+document.getElementById("calTitle").textContent = monthNames[month] + " " + year;
 
-
-// Проверка на високосный год (для февраля)
+let month_day = [31,28,31,30,31,30,31,31,30,31,30,31];
 if ((year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0)) {
-    month_day[1] = 29; // Февраль в високосном году
+    month_day[1] = 29;
 }
 
-for (let i = 0; i < 5; i++) {
+// Header row with weekday names
+const headerRow = table.insertRow();
+dayNames.forEach(name => {
+    const th = document.createElement("th");
+    th.textContent = name;
+    headerRow.appendChild(th);
+});
+
+// Figure out weekday of the 1st (Monday = 0)
+const firstOfMonth = new Date(year, month, 1);
+let startOffset = (firstOfMonth.getDay() + 6) % 7; // convert Sun=0 -> Mon=0 based
+
+let day = 1;
+let placed = false;
+
+while (!placed) {
     const row = table.insertRow();
-
     for (let j = 0; j < 7; j++) {
-        if (day > month_day[month]) break; // Если день выходит за пределы месяца, выходим из цикла
-
         const cell = row.insertCell();
+
+        if (day === 1 && j < startOffset) {
+            continue; // empty leading cell
+        }
+        if (day > month_day[month]) {
+            placed = true;
+            continue;
+        }
+
         cell.textContent = day;
 
-        // Проверка условий для покраски ячеек
-        for (let i = 0; i < list_day_zmiszane.length; i++) {
-            if (list_day_zmiszane[i] === day) {
-                if (list_month_zmiszane[i] === month ) {
-                    cell.style.backgroundColor = "rgb(0, 200, 0)";
-                }
+        for (let i = 0; i < list_day_zmieszane.length; i++) {
+            if (list_day_zmieszane[i] === day && list_month_zmieszane[i] === humanMonth) {
+                cell.style.backgroundColor = "rgb(0, 200, 0)";
             }
         }
-
         for (let i = 0; i < list_day_segregacja.length; i++) {
-            if (list_day_segregacja[i] === day) {
-                if (list_month_segregacja[i] === month ) {
-                    cell.style.backgroundColor = "yellow";
-                }
+            if (list_day_segregacja[i] === day && list_month_segregacja[i] === humanMonth) {
+                cell.style.backgroundColor = "yellow";
             }
         }
-
         for (let i = 0; i < list_day_bioodpady.length; i++) {
-            if (list_day_bioodpady[i] === day) {
-                if (list_month_bioodpady[i] === month ) {
-                    cell.style.backgroundColor = "#8B4513";
-                }
+            if (list_day_bioodpady[i] === day && list_month_bioodpady[i] === humanMonth) {
+                cell.style.backgroundColor = "#8B4513";
+                cell.style.color = "#fff";
             }
         }
-
         for (let i = 0; i < list_day_gabaryty.length; i++) {
-            if (list_day_gabaryty[i] === day) {
-                if (list_month_gabaryty[i] === month ) {
-                    cell.style.backgroundColor = "orange";
-                }
+            if (list_day_gabaryty[i] === day && list_month_gabaryty[i] === humanMonth) {
+                cell.style.backgroundColor = "orange";
             }
         }
 
-        // Применение линейного градиента для определённых дней
-        if (day === 3 && month + 1 === 4) {
+        if (day === 3 && humanMonth === 4) {
+            cell.style.background = "linear-gradient(orange 50%, green 50%)";
+        }
+        if (day === 16 && humanMonth === 10) {
             cell.style.background = "linear-gradient(orange 50%, green 50%)";
         }
 
-        if (day === 16 && month + 1 === 10) {
-            cell.style.background = "linear-gradient(orange 50%, green 50%)";
+        if (day === today.getDate()) {
+            cell.classList.add("today");
         }
 
-        day += 1; 
+        day += 1;
     }
+    if (day > month_day[month]) placed = true;
 }
-
-day_today();
-    </script>
+</script>
 </body>
 </html>
+
