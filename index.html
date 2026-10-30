@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Календарь вывоза отходов</title>
+<title>Waste Collection Calendar</title>
 <style>
     * { box-sizing: border-box; }
     body {
@@ -96,30 +96,30 @@
 </head>
 <body>
 <div class="calendar-container">
-    <h1 id="calTitle">Календарь</h1>
+    <h1 id="calTitle">Calendar</h1>
     <table id="myTable"></table>
     <div class="legend">
-        <div class="legend-item"><span class="swatch" style="background:rgb(0,200,0)"></span>Смешанные</div>
-        <div class="legend-item"><span class="swatch" style="background:yellow"></span>Сортировка</div>
-        <div class="legend-item"><span class="swatch" style="background:#8B4513"></span>Биоотходы</div>
-        <div class="legend-item"><span class="swatch" style="background:orange"></span>Крупногабаритные</div>
+        <div class="legend-item"><span class="swatch" style="background:rgb(0,200,0)"></span>Mixed waste</div>
+        <div class="legend-item"><span class="swatch" style="background:yellow"></span>Recycling</div>
+        <div class="legend-item"><span class="swatch" style="background:#8B4513"></span>Bio waste</div>
+        <div class="legend-item"><span class="swatch" style="background:orange"></span>Bulky waste</div>
     </div>
 </div>
 
 <script>
-const list_day_zmieszane  = [3,17,25,15,29,12,26,10,24,7,21,4,18,2,16,30,13,27,11,29,8,22];
-const list_month_zmieszane = [4,4,4,5,5,6,6,7,7,8,8,9,9,10,10,10,11,11,12,12,1,1];
+const list_day_mixed   = [3,17,25,15,29,12,26,10,24,7,21,4,18,2,16,30,13,27,11,29,8,22];
+const list_month_mixed = [4,4,4,5,5,6,6,7,7,8,8,9,9,10,10,10,11,11,12,12,1,1];
 
-const list_day_segregacja  = [22,20,17,15,12,9,7,4,2,30,27];
-const list_month_segregacja = [4,5,6,7,8,9,10,11,12,12,1];
+const list_day_recycling   = [22,20,17,15,12,9,7,4,2,30,27];
+const list_month_recycling = [4,5,6,7,8,9,10,11,12,12,1];
 
-const list_day_bioodpady  = [2,16,30,14,28,11,25,9,23,6,20,3,17,1,15,29,12,26,10,19,7,21];
-const list_month_bioodpady = [4,4,4,5,5,6,6,7,7,8,8,9,9,10,10,10,11,11,12,12,1,1];
+const list_day_bio   = [2,16,30,14,28,11,25,9,23,6,20,3,17,1,15,29,12,26,10,19,7,21];
+const list_month_bio = [4,4,4,5,5,6,6,7,7,8,8,9,9,10,10,10,11,11,12,12,1,1];
 
-const list_day_gabaryty  = [20,18];
-const list_month_gabaryty = [4,8];
+const list_day_bulky   = [20,18];
+const list_month_bulky = [4,8];
 
-const dayNames = ["Пн","Вт","Ср","Чт","Пт","Сб","Вс"];
+const dayNames = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 
 const table = document.getElementById("myTable");
 const today = new Date();
@@ -127,7 +127,7 @@ const month = today.getMonth(); // 0-indexed
 const humanMonth = month + 1;   // 1-indexed, matches the data lists
 const year = today.getFullYear();
 
-const monthNames = ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"];
+const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 document.getElementById("calTitle").textContent = monthNames[month] + " " + year;
 
 let month_day = [31,28,31,30,31,30,31,31,30,31,30,31];
@@ -165,24 +165,24 @@ while (!placed) {
 
         cell.textContent = day;
 
-        for (let i = 0; i < list_day_zmieszane.length; i++) {
-            if (list_day_zmieszane[i] === day && list_month_zmieszane[i] === humanMonth) {
+        for (let i = 0; i < list_day_mixed.length; i++) {
+            if (list_day_mixed[i] === day && list_month_mixed[i] === humanMonth) {
                 cell.style.backgroundColor = "rgb(0, 200, 0)";
             }
         }
-        for (let i = 0; i < list_day_segregacja.length; i++) {
-            if (list_day_segregacja[i] === day && list_month_segregacja[i] === humanMonth) {
+        for (let i = 0; i < list_day_recycling.length; i++) {
+            if (list_day_recycling[i] === day && list_month_recycling[i] === humanMonth) {
                 cell.style.backgroundColor = "yellow";
             }
         }
-        for (let i = 0; i < list_day_bioodpady.length; i++) {
-            if (list_day_bioodpady[i] === day && list_month_bioodpady[i] === humanMonth) {
+        for (let i = 0; i < list_day_bio.length; i++) {
+            if (list_day_bio[i] === day && list_month_bio[i] === humanMonth) {
                 cell.style.backgroundColor = "#8B4513";
                 cell.style.color = "#fff";
             }
         }
-        for (let i = 0; i < list_day_gabaryty.length; i++) {
-            if (list_day_gabaryty[i] === day && list_month_gabaryty[i] === humanMonth) {
+        for (let i = 0; i < list_day_bulky.length; i++) {
+            if (list_day_bulky[i] === day && list_month_bulky[i] === humanMonth) {
                 cell.style.backgroundColor = "orange";
             }
         }
@@ -205,4 +205,3 @@ while (!placed) {
 </script>
 </body>
 </html>
-
